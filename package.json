@@ -1,0 +1,43 @@
+{
+  "name": "kiwa-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Dave Caruso <dave@davecode.me>",
+  "dependencies": {
+    "@material-ui/core": "^3.9.1",
+    "@material-ui/icons": "^3.0.2",
+    "classnames": "^2.2.6",
+    "core-js": "^2.6.5",
+    "gatsby": "^2.0.76",
+    "gatsby-plugin-hidenames": "^1.0.1",
+    "gatsby-plugin-react-helmet": "^3.0.2",
+    "gatsby-plugin-slug": "^1.0.1",
+    "gatsby-source-filesystem": "^2.0.22",
+    "gatsby-transformer-remark": "^2.2.6",
+    "how-secure-is-my-password": "^0.2.0",
+    "htmr": "^0.7.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-helmet": "^5.2.0",
+    "react-jss": "^8.6.1"
+  },
+  "scripts": {
+    "build": "gatsby build",
+    "start": "gatsby develop",
+    "format": "prettier --write \"src/**/*.js\"",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-preset-gatsby": "^0.1.6",
+    "eslint": "^5.12.1",
+    "eslint-config-dave": "^1.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}

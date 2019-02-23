@@ -1,0 +1,39 @@
+{
+	"MUI Starter Component": {
+		"scope": "javascript,typescript,javascriptreact",
+		"prefix": "mui",
+		"body": [
+			"import React, { Component } from 'react';",
+			"import { withStyles, createStyles } from '@material-ui/core';",
+			"import { hot } from 'react-hot-loader/root';",
+			"",
+			"const styles = (theme) => createStyles({",
+			"  root: {",
+			"",
+			"  },",
+			"});",
+			"",
+			"class $1 extends Component {",
+			"  render() {",
+			"    const { classes } = this.props;",
+			"",
+			"    return <div className={classes.root}>",
+			"      $2",
+			"    </div>;",
+			"  }",
+			"}",
+			"",
+			"export default hot(withStyles(styles)($1));",
+		]
+	},
+	"Inline Code": {
+		"scope": "javascript,typescript,javascriptreact",
+		"body": "<IC>$1</IC>",
+		"prefix": "ic"
+	},
+	"Link": {
+		"scope": "javascript,typescript,javascriptreact",
+		"body": "<Link to={$1}>$0</Link>",
+		"prefix": "aa"
+	}
+}

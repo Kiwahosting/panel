@@ -1,0 +1,7 @@
+{
+  "parser": "babel-eslint",
+  "extends": "dave/react",
+  "parserOptions": {
+    "extends": "babel-preset-gatsby"
+  }
+}
