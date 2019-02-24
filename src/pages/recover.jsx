@@ -37,8 +37,7 @@ const styles = theme => createStyles({
     opacity: 0.7,
   },
   noscript: {
-    lineHeight: '328px', // this is calculated on marginTop and height of the `form` element
-    height: '328px',
+    
   },
 });
 
@@ -86,16 +85,16 @@ class AuthPage extends Component {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component='h1' variant='h5'>
-        Sign in
+        Recover your Password
       </Typography>
       <Typography component='p' variant='body1'>
-        to Kiwahosting Panel
+        for Kiwahosting Panel
       </Typography>
       {
-        typeof document === 'undefined'
-        && <Typography variant='body1' className={c.noscript} color='error'>
-          <noscript>Please Enable JavaScript to Sign In</noscript>
-        </Typography>
+        // typeof document === 'undefined'
+        // && <Typography variant='body1' className={c.noscript} color='error'>
+        //   <noscript>Please Enable JavaScript</noscript>
+        // </Typography>
       }
       {
         typeof document !== 'undefined'
@@ -111,27 +110,12 @@ class AuthPage extends Component {
               value={this.state.mail}
               onChange={this.handleMailChange}
             />
-            <TextField
-              className={c.input}
-              variant='outlined'
-              autoComplete='current-password'
-              label='Password'
-              type='password'
-              error={error}
-              fullWidth
-              value={this.state.pswd}
-              onChange={this.handlePswdChange}
-            />
             {
               loginState === 'denied'
                 && <Typography component='p' variant='body1' color='error'>
                   Incorrect Username or Password
                 </Typography>
             }
-            <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
-              label='Remember me'
-            />
             <Button
               type='submit'
               fullWidth
@@ -139,13 +123,10 @@ class AuthPage extends Component {
               color='primary'
               className={c.submit}
             >
-              Sign in
+              Reset Password
             </Button>
             <div className={c.create}>
-              <Link to='/register'>Don't Have an Account?</Link>
-            </div>
-            <div className={c.recover}>
-              <Link to='/recover'>Reset Password</Link>
+              <Link to='/auth'>Sign In</Link>
             </div>
           </form>
       }

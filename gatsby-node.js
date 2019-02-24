@@ -5,7 +5,8 @@ exports.onCreateWebpackConfig = function ({ getConfig }) {
 
   config.resolve.alias['@components'] = path.join(__dirname, 'src/components');
   config.resolve.alias['@layouts'] = path.join(__dirname, 'src/layouts');
-  config.resolve.alias['withRoot'] = path.join(__dirname, 'src/withRoot.js');
+  config.resolve.alias['withRoot'] = path.join(__dirname, 'src/withRoot.jsx');
+  config.resolve.alias['session'] = path.join(__dirname, 'src/session.jsx');
 
 };
 
@@ -57,3 +58,17 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     });
   }
 };
+
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage } = actions;
+
+  // page.matchPath is a special key that's used for matching pages
+  // only on the client.
+  if (page.path.match(/^\/panel/)) {
+    page.matchPath = '/panel/*';
+
+    // Update the page.
+    createPage(page);
+  }
+}
+;
