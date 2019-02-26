@@ -4,10 +4,12 @@ import { Router } from '@reach/router';
 
 import { isLoggedIn } from 'session';
 import withRoot from 'withRoot';
-import PanelLayout from 'layouts/PanelLayout';
 
 import PanelMainPage from 'templates/PanelMainPage';
 import Panel404 from 'templates/Panel404';
+import PanelAccountSettings from 'templates/PanelAccountSettings';
+import PanelSite from 'templates/PanelSite';
+import PanelLayout from 'layouts/PanelLayout';
 
 class Panel extends Component {
   state = {  }
@@ -20,7 +22,9 @@ class Panel extends Component {
 
     return <PanelLayout>
       <Router>
+        <PanelAccountSettings path='/panel/account' />
         <PanelMainPage path='/panel' />
+        <PanelSite path='/panel/:siteId' />
         <Panel404 default />
       </Router>
     </PanelLayout>;

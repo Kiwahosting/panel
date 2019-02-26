@@ -42,8 +42,8 @@ const styles = theme => createStyles({
     opacity: 0.7,
   },
   noscript: {
-    lineHeight: '328px', // this is calculated on marginTop and height of the `form` element
-    height: '328px',
+    lineHeight: '280px', // this is calculated on marginTop and height of the `form` element
+    height: '280px',
   },
 });
 
@@ -89,6 +89,12 @@ class AuthPage extends Component {
   render() {
     const { classes: c } = this.props;
     const { isLoading, loginState, error } = this.state;
+
+    if (isLoggedIn()) {
+      // If we’re logged in, redirect to the panel.
+      navigate('/panel');
+      return null;
+    }
 
     return <AuthLayout loading={isLoading}>
       <Avatar className={c.avatar}>
@@ -137,10 +143,6 @@ class AuthPage extends Component {
                   Incorrect Username or Password
                 </Typography>
             }
-            <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
-              label='Remember me'
-            />
             <Button
               type='submit'
               fullWidth
@@ -163,4 +165,5 @@ class AuthPage extends Component {
 }
 
 import withRoot from 'withRoot';
+import { isLoggedIn } from 'session';
 export default withRoot(withStyles(styles)(AuthPage));

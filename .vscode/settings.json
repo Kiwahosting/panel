@@ -24,5 +24,6 @@
         "**/.cache/**": true,
         "**/public/**": true,
     },
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.rulers": [100]
 }

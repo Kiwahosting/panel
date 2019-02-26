@@ -92,10 +92,10 @@ class AuthPage extends Component {
         for Kiwahosting Panel
       </Typography>
       {
-        // typeof document === 'undefined'
-        // && <Typography variant='body1' className={c.noscript} color='error'>
-        //   <noscript>Please Enable JavaScript</noscript>
-        // </Typography>
+        typeof document === 'undefined'
+        && <Typography variant='body1' className={c.noscript} color='error'>
+          <noscript>Please Enable JavaScript</noscript>
+        </Typography>
       }
       {
         typeof document !== 'undefined'

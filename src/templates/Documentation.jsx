@@ -5,8 +5,8 @@ import convert from 'htmr';
 import {
   withStyles,
   createStyles,
-  Typography
-} from '@material-ui/core'
+  Typography,
+} from '@material-ui/core';
 
 import DocsLayout from 'layouts/DocsLayout';
 import withRoot from 'withRoot';
