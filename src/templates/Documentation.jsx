@@ -1,15 +1,19 @@
 import React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import withRoot from 'withRoot';
 import { graphql } from 'gatsby';
 import convert from 'htmr';
 
-import DocsLayout from '@layouts/DocsLayout';
-import { Typography } from '@material-ui/core';
-import { Link } from '@components';
+import {
+  withStyles,
+  createStyles,
+  Typography
+} from '@material-ui/core'
+
+import DocsLayout from 'layouts/DocsLayout';
+import withRoot from 'withRoot';
+import Link from 'components/Link';
 
 // eslint-disable-next-line no-unused-vars
-const styles = (theme) => ({
+const styles = (theme) => createStyles({
 
 });
 
@@ -20,7 +24,11 @@ const transform = {
   p: (props) => <Typography variant='body1' paragraph component='p' {...props} />,
   a: (props) => <Link
     {...props}
-    to={props.href.endsWith('.md') ? '/docs' + props.href.substring(0, props.href.length - 3) : props.href}
+    to={
+      props.href.endsWith('.md')
+        ? '/docs' + props.href.substring(0, props.href.length - 3)
+        : props.href
+    }
     href={undefined}
   />,
 };

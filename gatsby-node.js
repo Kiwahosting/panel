@@ -3,8 +3,9 @@ const path = require('path');
 exports.onCreateWebpackConfig = function ({ getConfig }) {
   const config = getConfig();
 
-  config.resolve.alias['@components'] = path.join(__dirname, 'src/components');
-  config.resolve.alias['@layouts'] = path.join(__dirname, 'src/layouts');
+  config.resolve.alias['components'] = path.join(__dirname, 'src/components');
+  config.resolve.alias['layouts'] = path.join(__dirname, 'src/layouts');
+  config.resolve.alias['templates'] = path.join(__dirname, 'src/templates');
   config.resolve.alias['withRoot'] = path.join(__dirname, 'src/withRoot.jsx');
   config.resolve.alias['session'] = path.join(__dirname, 'src/session.jsx');
 

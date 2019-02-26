@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@components": ["./src/components"],
-      "@layouts": ["./src/layouts/*"],
       "withRoot": ["./src/withRoot.js"],
       "session": ["./src/session.js"],
     },

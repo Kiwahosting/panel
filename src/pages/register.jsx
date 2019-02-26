@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import { Avatar, Button, Typography, TextField, withStyles, createStyles } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import withRoot from '../withRoot';
-import { Link } from '@components';
-import AuthLayout from '@layouts/AuthLayout';
 import classNames from 'classnames';
+import {
+  Avatar,
+  Button,
+  Typography,
+  withStyles,
+  createStyles,
+  TextField,
+} from '@material-ui/core';
 import { red, amber, green } from '@material-ui/core/colors';
+
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+
+import AuthLayout from 'layouts/AuthLayout';
+import { Link } from 'components';
 
 import hsimp from 'how-secure-is-my-password/src/hsimp';
 
@@ -242,4 +250,5 @@ class AuthPage extends Component {
   }
 }
 
+import withRoot from 'withRoot';
 export default withRoot(withStyles(styles)(AuthPage));

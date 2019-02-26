@@ -1,5 +1,5 @@
 import React from 'react';
-import MUILink from '@material-ui/core/Link';
+import { Link as MUILink } from '@material-ui/core';
 import { Link as GLink } from 'gatsby';
 
 function Link(props) {
@@ -10,5 +10,5 @@ function Link(props) {
     return <MUILink component={GLink} to={to} variant='body1' color='secondary' {...props} />;
   }
 }
- 
+
 export default Link;

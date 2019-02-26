@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { navigate } from 'gatsby';
 
 import {
-  AppBar,
-  Toolbar,
-  Typography,
   withStyles,
+  createStyles,
 } from '@material-ui/core';
 
-const styles = theme => ({
+const styles = theme => createStyles({
   grow: {
     flexGrow: 1,
   },

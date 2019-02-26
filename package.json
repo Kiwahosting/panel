@@ -25,7 +25,8 @@
     "build": "gatsby build",
     "start": "gatsby develop",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+    "lint": "npx eslint src --ext jsx,js"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",

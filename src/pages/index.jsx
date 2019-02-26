@@ -1,9 +1,8 @@
 import React from 'react';
 import { withStyles, Typography } from '@material-ui/core';
-import withRoot from 'withRoot';
 
-import MainLayout from '@layouts/MainLayout';
-import { SEO, Link } from '@components';
+import MainLayout from 'layouts/MainLayout';
+import { SEO, Link } from 'components';
 
 // eslint-disable-next-line no-unused-vars
 const styles = (theme) => ({
@@ -11,7 +10,7 @@ const styles = (theme) => ({
 });
 
 function Home(props) {
-  const { classes } = props;
+  const { classes: c } = props;
 
   return <MainLayout {...props}>
     <SEO title='Kiwahosting' isRoot />
@@ -28,4 +27,5 @@ function Home(props) {
   </MainLayout>;
 }
 
+import withRoot from 'withRoot';
 export default withRoot(withStyles(styles)(Home));

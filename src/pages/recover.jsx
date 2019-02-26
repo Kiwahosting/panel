@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  Avatar,
+  Button,
+  Typography,
+  withStyles,
+  createStyles,
+  TextField,
+} from '@material-ui/core';
+
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-import createStyles from '@material-ui/core/styles/createStyles';
-import withRoot from 'withRoot';
-import { TextField } from '@material-ui/core';
-import { Link } from '@components';
-import AuthLayout from '@layouts/AuthLayout';
+
+import AuthLayout from 'layouts/AuthLayout';
+import { Link } from 'components';
 
 const styles = theme => createStyles({
   avatar: {
@@ -134,4 +135,5 @@ class AuthPage extends Component {
   }
 }
 
+import withRoot from 'withRoot';
 export default withRoot(withStyles(styles)(AuthPage));
