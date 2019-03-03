@@ -1,9 +1,13 @@
 import { isLoggedIn } from './session';
+import { uselessDelay } from './useless';
 
 export async function getSiteList() {
   if(!isLoggedIn()) {
     throw new Error('Not Logged In');
   }
+
+  await uselessDelay(700);
+
   return [
     {
       id: '2438243982143',
@@ -24,6 +28,8 @@ export async function getSiteInfo(siteId) {
   if (!isLoggedIn()) {
     throw new Error('Not Logged In');
   }
+
+  await uselessDelay(700);
 
   if (siteId === '2438243982143') {
     return {

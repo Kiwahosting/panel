@@ -14,13 +14,18 @@ import {
   List,
   Divider,
   createStyles,
+  ClickAwayListener,
+  Paper,
+  Popover,
+  Badge,
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { logout } from 'api';
+import NotificationIcon from '@material-ui/icons/Notifications';
+import { logout, getNotifications } from 'api';
 
 const styles = theme => createStyles({
   root: {
@@ -57,12 +62,31 @@ const styles = theme => createStyles({
       paddingRight: theme.spacing.unit * 2,
     },
   },
+  notificationWindow: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+  },
+  notificationTitle: {
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 1,
+    textAlign: 'center',
+  },
 });
 
 class Layout extends Component {
   state = {
     drawerOpen: false,
+    notifOpen: false,
+    notifications: null,
   }
+
+  componentDidMount() {
+    getNotifications().then(notifications => {
+      this.setState({ notifications });
+    });
+  }
+
   handleBack = () => {
     navigate('/');
   }
@@ -75,8 +99,18 @@ class Layout extends Component {
     navigate('/');
   }
 
+  handleNotifOpen = () => {
+    if (!this.state.notifications) return;
+    this.setState({ notifOpen: true });
+  };
+
+  handleClickAway = () => {
+    this.setState({ notifOpen: false });
+  };
+
   render() {
     const { classes: c, children } = this.props;
+    const { notifOpen, notifications } = this.state;
     // Navigation, where each item in array is a list item, in the format
     //   [Label, Icon, OnClick]
     //      OnClick can be a url string, or function callback
@@ -158,6 +192,48 @@ class Layout extends Component {
           <Typography variant='h6' component='div' color='inherit' className={c.grow}>
             Kiwahosting Panel
           </Typography>
+          <IconButton
+            aria-owns={open ? 'menu-appbar' : undefined}
+            aria-haspopup='true'
+            onClick={this.handleNotifOpen}
+            buttonRef={node => this.notifElem = node}
+            color='inherit'
+          >
+            <Badge badgeContent={notifications && notifications.length || 0} color='secondary'>
+              <NotificationIcon />
+            </Badge>
+          </IconButton>
+          {this.notifElem &&
+            <Popover
+              open={notifOpen}
+              anchorEl={this.notifElem}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'center',
+                horizontal: 'right',
+              }}
+            >
+              <ClickAwayListener onClickAway={this.handleClickAway}>
+                <Paper
+                  className={c.notificationWindow}
+                >
+                  <Typography variant='h6' className={c.notificationTitle} component='div'>
+                    Notifications
+                  </Typography>
+                  {
+                    notifications && notifications.map((item, i) => {
+                      return <ListItem button key={i} component={Link} to={item.url}>
+                        <ListItemText primary={item.text} />
+                      </ListItem>;
+                    })
+                  }
+                </Paper>
+              </ClickAwayListener>
+            </Popover>
+          }
         </Toolbar>
       </AppBar>
 

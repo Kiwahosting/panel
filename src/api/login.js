@@ -1,7 +1,10 @@
 import { setCurrentUser, isLoggedIn } from './session';
+import { uselessDelay } from './useless';
 
 export async function login({ email, password }) {
   if (isLoggedIn()) return;
+
+  await uselessDelay(700);
 
   if(email !== 'dave') {
     return false;
@@ -19,6 +22,7 @@ export async function login({ email, password }) {
 }
 
 export async function logout() {
+  await uselessDelay(200);
   setCurrentUser({});
 }
 
