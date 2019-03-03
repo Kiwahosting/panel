@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { handleLogin } from 'session';
+import { login, isLoggedIn } from 'api';
 import { navigate } from 'gatsby';
 import {
   Avatar,
   Button,
-  FormControlLabel,
-  Checkbox,
   Typography,
   withStyles,
   createStyles,
@@ -56,18 +54,15 @@ class AuthPage extends Component {
     pswd: '',
   }
 
-  handleSubmit = (ev) => {
+  handleSubmit = async(ev) => {
     this.setState({ isLoading: true });
     ev.preventDefault();
 
-    // TODO: Use real server
-    setTimeout(async() => {
-      if(await handleLogin({ email: this.state.mail, password: this.state.pswd })) {
-        navigate('/panel');
-      } else {
-        this.setState({ loginState: 'denied', isLoading: false });
-      }
-    }, 700);
+    if(await login({ email: this.state.mail, password: this.state.pswd })) {
+      navigate('/panel');
+    } else {
+      this.setState({ loginState: 'denied', isLoading: false });
+    }
   }
 
   clearError() {
@@ -165,5 +160,4 @@ class AuthPage extends Component {
 }
 
 import withRoot from 'withRoot';
-import { isLoggedIn } from 'session';
 export default withRoot(withStyles(styles)(AuthPage));

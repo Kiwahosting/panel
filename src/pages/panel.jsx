@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { navigate } from 'gatsby';
 import { Router } from '@reach/router';
 
-import { isLoggedIn } from 'session';
+import { isLoggedIn } from 'api';
 import withRoot from 'withRoot';
 
 import PanelMainPage from 'templates/PanelMainPage';
@@ -16,12 +16,14 @@ class Panel extends Component {
   render() {
     if (!isLoggedIn() && location.pathname !== '/auth') {
       // If we’re not logged in, redirect to the home page.
-      navigate('/auth');
+      setTimeout(() => {
+        navigate('/auth');
+      }, 10);
       return null;
     }
 
     return <PanelLayout>
-      <Router>
+      <Router style={{ flex: 1 }}>
         <PanelAccountSettings path='/panel/account' />
         <PanelMainPage path='/panel' />
         <PanelSite path='/panel/:siteId' />

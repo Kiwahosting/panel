@@ -7,7 +7,7 @@ exports.onCreateWebpackConfig = function ({ getConfig }) {
   config.resolve.alias['layouts'] = path.join(__dirname, 'src/layouts');
   config.resolve.alias['templates'] = path.join(__dirname, 'src/templates');
   config.resolve.alias['withRoot'] = path.join(__dirname, 'src/withRoot.jsx');
-  config.resolve.alias['session'] = path.join(__dirname, 'src/session.jsx');
+  config.resolve.alias['api'] = path.join(__dirname, 'src/api');
 
 };
 

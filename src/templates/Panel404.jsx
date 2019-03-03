@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withStyles, createStyles, Typography } from '@material-ui/core';
 import { hot } from 'react-hot-loader/root';
 import { Link } from 'components';
-import PanelLayout from 'layouts/PanelLayout';
 
 const styles = (theme) => createStyles({
   paper: {

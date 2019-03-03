@@ -1,6 +1,7 @@
 import React from 'react';
 import { CircularProgress, withStyles, createStyles } from '@material-ui/core';
 import { hot } from 'react-hot-loader/root';
+import classNames from 'classnames';
 
 const styles = createStyles({
   root: {
@@ -19,8 +20,12 @@ const styles = createStyles({
   },
 });
 
-function LoadingScreen({ classes }) {
-  return <div className={classes.root}>
+function LoadingScreen(props) {
+  return <div
+    {...props}
+    classes={undefined}
+    className={classNames(props.classes.root, props.className)}
+  >
     <CircularProgress />
   </div>;
 }
