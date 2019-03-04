@@ -1,253 +1,197 @@
-import React, { Component } from 'react';
-import { navigate, Link } from 'gatsby';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Hidden from '@material-ui/core/Hidden';
+import { PanelNavigator as Navigator, PanelHeader as Header } from 'components';
 
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  withStyles,
-  IconButton,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  SwipeableDrawer,
-  List,
-  Divider,
-  createStyles,
-  ClickAwayListener,
-  Paper,
-  Popover,
-  Badge,
-} from '@material-ui/core';
+export const PanelStateContext = React.createContext(null);
 
-import MenuIcon from '@material-ui/icons/Menu';
-import HomeIcon from '@material-ui/icons/Home';
-import AccountIcon from '@material-ui/icons/AccountCircle';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import NotificationIcon from '@material-ui/icons/Notifications';
-import { logout, getNotifications } from 'api';
-
-const styles = theme => createStyles({
-  root: {
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-  toolbar: {
-    width: '100%',
-    maxWidth: 800,
-    margin: 'auto',
-  },
-  main: {
-    width: 'auto',
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing.unit * 3,
-    [theme.breakpoints.up(800 + theme.spacing.unit * 3 * 2)]: {
-      width: 800,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-    [theme.breakpoints.down(600)]: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
+let theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+    h5: {
+      fontWeight: 500,
+      fontSize: 26,
+      letterSpacing: 0.5,
     },
   },
-  notificationWindow: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+  palette: {
+    primary: {
+      main: '#36A0FF',
+      contrastText: '#FFF',
+    },
+    secondary: {
+      main: '#195EFF',
+    },
   },
-  notificationTitle: {
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 1,
-    textAlign: 'center',
+  shape: {
+    borderRadius: 4,
   },
 });
 
-class Layout extends Component {
+theme = {
+  ...theme,
+  overrides: {
+    MuiDrawer: {
+      paper: {
+        backgroundColor: '#18202c',
+      },
+    },
+    MuiButton: {
+      label: {
+        textTransform: 'initial',
+      },
+      contained: {
+        boxShadow: 'none',
+        '&:active': {
+          boxShadow: 'none',
+        },
+      },
+    },
+    MuiTabs: {
+      root: {
+        marginLeft: theme.spacing.unit,
+      },
+      indicator: {
+        height: 3,
+        borderTopLeftRadius: 3,
+        borderTopRightRadius: 3,
+        backgroundColor: theme.palette.common.white,
+      },
+    },
+    MuiTab: {
+      root: {
+        textTransform: 'initial',
+        margin: '0 16px',
+        minWidth: 0,
+        [theme.breakpoints.up('md')]: {
+          minWidth: 0,
+        },
+      },
+      labelContainer: {
+        padding: 0,
+        [theme.breakpoints.up('md')]: {
+          padding: 0,
+        },
+      },
+    },
+    MuiIconButton: {
+      root: {
+        padding: theme.spacing.unit,
+      },
+    },
+    MuiTooltip: {
+      tooltip: {
+        borderRadius: 4,
+      },
+    },
+    MuiDivider: {
+      root: {
+        backgroundColor: '#404854',
+      },
+    },
+    MuiListItemText: {
+      primary: {
+        fontWeight: theme.typography.fontWeightMedium,
+      },
+    },
+    MuiListItemIcon: {
+      root: {
+        color: 'inherit',
+        marginRight: 0,
+        '& svg': {
+          fontSize: 20,
+        },
+      },
+    },
+    MuiAvatar: {
+      root: {
+        width: 32,
+        height: 32,
+      },
+    },
+  },
+  props: {
+    MuiTab: {
+      disableRipple: true,
+    },
+  },
+  mixins: {
+    ...theme.mixins,
+    toolbar: {
+      minHeight: 48,
+    },
+  },
+};
+
+const drawerWidth = 256;
+
+const styles = {
+  root: {
+    display: 'flex',
+    height: '100vh',
+  },
+  drawer: {
+    [theme.breakpoints.up('sm')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appContent: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+};
+
+class Paperbase extends React.Component {
   state = {
-    drawerOpen: false,
-    notifOpen: false,
-    notifications: null,
-  }
-
-  componentDidMount() {
-    getNotifications().then(notifications => {
-      this.setState({ notifications });
-    });
-  }
-
-  handleBack = () => {
-    navigate('/');
-  }
-
-  onDrawerOpen = () => this.setState({ drawerOpen: true });
-  onDrawerClose = () => this.setState({ drawerOpen: false });
-
-  handleLogout = async() => {
-    await logout();
-    navigate('/');
-  }
-
-  handleNotifOpen = () => {
-    if (!this.state.notifications) return;
-    this.setState({ notifOpen: true });
+    mobileOpen: false,
+    context: {
+      headerShadow: false,
+      // eslint-disable-next-line
+      setHeaderShadow: (v) => this.setState({ context: { ...this.state.context, headerShadow: v } }),
+    },
   };
 
-  handleNotifClose = () => {
-    this.setState({ notifOpen: false });
+  handleDrawerToggle = () => {
+    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
   render() {
-    const { classes: c, children } = this.props;
-    const { notifOpen, notifications } = this.state;
-    // Navigation, where each item in array is a list item, in the format
-    //   [Label, Icon, OnClick]
-    //      OnClick can be a url string, or function callback
-    //      which can return true to prevent closing of the
-    //      drawer box.
-    //   or ['divider']
-    //      which creates a divider
+    const { classes } = this.props;
 
-    const nav = [
-      ['Home', HomeIcon, '/panel'],
-      ['Account Settings', AccountIcon, '/panel/account'],
-      ['divider'],
-      ['Log Out', ExitToAppIcon, this.handleLogout],
-    ];
-
-    return <div className={c.root}>
-      <SwipeableDrawer
-        open={this.state.drawerOpen}
-        onClose={this.onDrawerClose}
-        onOpen={this.onDrawerOpen}
-      >
-        <AppBar position='sticky' component='header' color='secondary'>
-          <Toolbar className={c.toolbar}>
-            <Typography variant='h6' component='div' color='inherit' className={c.grow}>
-              Kiwahosting Panel
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <List>
-          {
-            nav.map(([name, Icon, url], i) => {
-              if (name === 'divider') {
-                return <Divider
-                  key={i}
-                  variant='middle'
-                />;
-              }
-              if(typeof url === 'function') {
-                return <ListItem
-                  button
-                  onClick={() => {
-                    // if callback returns something, skip closing
-                    if(url() === undefined) {
-                      this.onDrawerClose();
-                    }
-                  }}
-                  key={url}
-                >
-                  <ListItemIcon><Icon /></ListItemIcon>
-                  <ListItemText primary={name} />
-                </ListItem>;
-              } else {
-                return <ListItem
-                  button
-                  component={Link}
-                  to={url}
-                  onClick={this.onDrawerClose}
-                  key={url}
-                >
-                  <ListItemIcon><Icon /></ListItemIcon>
-                  <ListItemText primary={name} />
-                </ListItem>;
-              }
-            })
-          }
-        </List>
-      </SwipeableDrawer>
-
-      <AppBar position='sticky' component='header'>
-        <Toolbar className={c.toolbar}>
-          <IconButton
-            className={c.menuButton}
-            color='inherit'
-            aria-label='Menu'
-            onClick={this.onDrawerOpen}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant='h6' component='div' color='inherit' className={c.grow}>
-            Kiwahosting Panel
-          </Typography>
-          <IconButton
-            aria-owns={notifOpen ? 'menu-appbar' : undefined}
-            aria-haspopup='true'
-            onClick={this.handleNotifOpen}
-            buttonRef={node => this.notifElem = node}
-            color='inherit'
-          >
-            <Badge badgeContent={notifications && notifications.length || 0} color='secondary'>
-              <NotificationIcon />
-            </Badge>
-          </IconButton>
-          {this.notifElem &&
-            <Popover
-              open={notifOpen}
-              anchorEl={this.notifElem}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              transformOrigin={{
-                vertical: 'center',
-                horizontal: 'right',
-              }}
-            >
-              <ClickAwayListener onClickAway={this.handleNotifClose}>
-                <Paper
-                  className={c.notificationWindow}
-                >
-                  <Typography variant='h6' className={c.notificationTitle} component='div'>
-                    Notifications
-                  </Typography>
-                  {
-                    notifications && notifications.map((item, i) => {
-                      return <ListItem
-                        key={i}
-                        button
-                        component={Link}
-                        to={item.url}
-                        onClick={this.handleNotifClose}
-                      >
-                        <ListItemText primary={item.text} />
-                      </ListItem>;
-                    })
-                  }
-                </Paper>
-              </ClickAwayListener>
-            </Popover>
-          }
-        </Toolbar>
-      </AppBar>
-
-      <main className={c.main}>
-        {children}
-      </main>
-    </div>;
+    return (
+      <MuiThemeProvider theme={theme}>
+        <PanelStateContext.Provider value={this.state.context}>
+          <div className={classes.root}>
+            <CssBaseline />
+            <nav className={classes.drawer}>
+              <Hidden smUp implementation='js'>
+                <Navigator
+                  PaperProps={{ style: { width: drawerWidth } }}
+                  variant='temporary'
+                  open={this.state.mobileOpen}
+                  onClose={this.handleDrawerToggle}
+                />
+              </Hidden>
+              <Hidden xsDown implementation='css'>
+                <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+              </Hidden>
+            </nav>
+            <div className={classes.appContent}>
+              { this.props.children }
+            </div>
+          </div>
+        </PanelStateContext.Provider>
+      </MuiThemeProvider>
+    );
   }
 }
 
-export default withStyles(styles)(Layout);
+Paperbase.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Paperbase);

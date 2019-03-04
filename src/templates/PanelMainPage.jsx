@@ -10,6 +10,7 @@ import { hot } from 'react-hot-loader/root';
 import { navigate } from 'gatsby';
 import { getSiteList } from 'api';
 import Loading from 'components/Loading';
+import PanelContent from 'components/PanelContent';
 
 const styles = (theme) => createStyles({
   paper: {
@@ -61,7 +62,27 @@ class PanelMainPage extends Component {
   render() {
     const { classes: c } = this.props;
 
-    return <>
+    return <PanelContent
+      title='Main'
+      tabs={[
+        {
+          id: 'Overview',
+          url: '/panel',
+        },
+        {
+          id: 'Sites',
+          url: '/panel/sites',
+        },
+        {
+          id: 'Domains',
+          url: '/panel/domains',
+        },
+        {
+          id: 'Whatever Else',
+          url: '/panel/whatever',
+        },
+      ]}
+    >
       <Typography variant='h4' component='h1' paragraph>
         Your Sites
       </Typography>
@@ -75,7 +96,7 @@ class PanelMainPage extends Component {
             : <Loading className={c.loading} />
         }
       </Paper>
-    </>;
+    </PanelContent>;
   }
 }
 

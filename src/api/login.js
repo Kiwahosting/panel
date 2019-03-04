@@ -21,8 +21,7 @@ export async function login({ email, password }) {
   return true;
 }
 
-export async function logout() {
-  await uselessDelay(200);
+export function logout() {
   setCurrentUser({});
 }
 

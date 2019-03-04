@@ -7,12 +7,11 @@ import withRoot from 'withRoot';
 
 import PanelMainPage from 'templates/PanelMainPage';
 import Panel404 from 'templates/Panel404';
-import PanelAccountSettings from 'templates/PanelAccountSettings';
-import PanelSite from 'templates/PanelSite';
 import PanelLayout from 'layouts/PanelLayout';
 
 class Panel extends Component {
   state = {  }
+
   render() {
     if (typeof location === 'undefined') {
       return <PanelLayout>
@@ -28,10 +27,8 @@ class Panel extends Component {
     }
 
     return <PanelLayout>
-      <Router style={{ flex: 1 }}>
-        <PanelAccountSettings path='/panel/account' />
+      <Router style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <PanelMainPage path='/panel' />
-        <PanelSite path='/panel/:siteId' />
         <Panel404 default />
       </Router>
     </PanelLayout>;
