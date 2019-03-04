@@ -107,6 +107,9 @@ class AuthPage extends Component {
 
   handleSubmit = (ev) => {
     this.setState({ isLoading: true });
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 1000);
     ev.preventDefault();
   }
 

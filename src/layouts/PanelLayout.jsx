@@ -104,7 +104,7 @@ class Layout extends Component {
     this.setState({ notifOpen: true });
   };
 
-  handleClickAway = () => {
+  handleNotifClose = () => {
     this.setState({ notifOpen: false });
   };
 
@@ -193,7 +193,7 @@ class Layout extends Component {
             Kiwahosting Panel
           </Typography>
           <IconButton
-            aria-owns={open ? 'menu-appbar' : undefined}
+            aria-owns={notifOpen ? 'menu-appbar' : undefined}
             aria-haspopup='true'
             onClick={this.handleNotifOpen}
             buttonRef={node => this.notifElem = node}
@@ -216,7 +216,7 @@ class Layout extends Component {
                 horizontal: 'right',
               }}
             >
-              <ClickAwayListener onClickAway={this.handleClickAway}>
+              <ClickAwayListener onClickAway={this.handleNotifClose}>
                 <Paper
                   className={c.notificationWindow}
                 >
@@ -225,7 +225,13 @@ class Layout extends Component {
                   </Typography>
                   {
                     notifications && notifications.map((item, i) => {
-                      return <ListItem button key={i} component={Link} to={item.url}>
+                      return <ListItem
+                        key={i}
+                        button
+                        component={Link}
+                        to={item.url}
+                        onClick={this.handleNotifClose}
+                      >
                         <ListItemText primary={item.text} />
                       </ListItem>;
                     })

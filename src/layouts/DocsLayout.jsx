@@ -18,7 +18,7 @@ const styles = theme => ({
   },
   toolbar: {
     width: '100%',
-    maxWidth: 800,
+    maxWidth: 1000,
     margin: 'auto',
   },
   main: {
@@ -27,12 +27,12 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing.unit * 3,
-    [theme.breakpoints.up(800 + theme.spacing.unit * 3 * 2)]: {
-      width: 800,
+    [theme.breakpoints.up(1000)]: {
+      width: 1000,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
-    [theme.breakpoints.down(600)]: {
+    [theme.breakpoints.down(1000 - theme.spacing.unit * 3 * 2)]: {
       paddingLeft: theme.spacing.unit * 2,
       paddingRight: theme.spacing.unit * 2,
     },

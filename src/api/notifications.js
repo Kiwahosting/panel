@@ -11,13 +11,13 @@ export async function getNotifications() {
   return [
     {
       id: 'world-end',
-      text: 'The world is going to end, fix that now!',
-      url: '/panel/site-id/fix-end-world',
+      text: 'Example: Password is Insecure',
+      url: '/panel/account',
     },
     {
       id: 'other',
-      text: 'Other notif',
-      url: '/',
+      text: 'Example: davecode is not properly configured',
+      url: '/panel/8152314231244',
     },
   ];
 }

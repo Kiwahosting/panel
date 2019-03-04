@@ -14,10 +14,15 @@ import PanelLayout from 'layouts/PanelLayout';
 class Panel extends Component {
   state = {  }
   render() {
+    if (typeof location === 'undefined') {
+      return <PanelLayout>
+        <noscript>Enable JavaScript to use Kiwahosting Panel</noscript>
+      </PanelLayout>;
+    }
     if (!isLoggedIn() && location.pathname !== '/auth') {
-      // If we’re not logged in, redirect to the home page.
+    // If we’re not logged in, redirect to the home page.
       setTimeout(() => {
-        navigate('/auth');
+        navigate('/auth#' + location.pathname);
       }, 10);
       return null;
     }

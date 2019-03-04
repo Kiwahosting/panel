@@ -59,7 +59,9 @@ class AuthPage extends Component {
     ev.preventDefault();
 
     if(await login({ email: this.state.mail, password: this.state.pswd })) {
-      navigate('/panel');
+      navigate(
+        (location.hash && location.hash.length > 0 && location.hash.replace(/^#/, '')) || '/panel'
+      );
     } else {
       this.setState({ loginState: 'denied', isLoading: false });
     }

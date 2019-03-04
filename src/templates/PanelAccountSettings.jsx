@@ -4,7 +4,6 @@ import {
   createStyles,
   Typography,
   Paper,
-  Button,
 } from '@material-ui/core';
 import { hot } from 'react-hot-loader/root';
 
@@ -24,10 +23,15 @@ class PanelMainPage extends Component {
         Account Settings
       </Typography>
       <Paper className={c.paper}>
-        <Button
-          variant='contained'
-          color='secondary'
-        >Delete Account</Button>
+        <Typography variant='h5' component='div'>
+          First Last
+        </Typography>
+        <Typography variant='body1' component='div'>
+          email@example.com
+        </Typography>
+        <Typography variant='body1' component='div'>
+          2 sites and 3 domains.
+        </Typography>
       </Paper>
     </>;
   }
