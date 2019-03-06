@@ -89,7 +89,9 @@ class AuthPage extends Component {
 
     if (isLoggedIn()) {
       // If we’re logged in, redirect to the panel.
-      navigate('/panel');
+      setTimeout(() => {
+        navigate('/panel');
+      }, 100);
       return null;
     }
 

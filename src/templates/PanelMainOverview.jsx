@@ -11,6 +11,7 @@ import { navigate } from 'gatsby';
 import { getSiteList } from 'api';
 import Loading from 'components/Loading';
 import PanelContent from 'components/PanelContent';
+import { MainTabs } from 'navigation';
 
 const styles = (theme) => createStyles({
   paper: {
@@ -37,7 +38,7 @@ const SiteButton = withStyles(stylesButton, {name:'SiteButton'})(
   ({ classes: c, site: { name, domains, id } }) => {
     return <ButtonBase
       className={c.root}
-      onClick={() => navigate('/panel/' + id)}
+      onClick={() => navigate('/panel/site/' + id)}
     >
       <Typography variant='h5' component='h2'>
         {name}
@@ -64,30 +65,13 @@ class PanelMainPage extends Component {
 
     return <PanelContent
       title='Main'
-      tabs={[
-        {
-          id: 'Overview',
-          url: '/panel',
-        },
-        {
-          id: 'Sites',
-          url: '/panel/sites',
-        },
-        {
-          id: 'Domains',
-          url: '/panel/domains',
-        },
-        {
-          id: 'Whatever Else',
-          url: '/panel/whatever',
-        },
-      ]}
+      activeTab={0}
+      tabs={MainTabs}
     >
       <Typography variant='h4' component='h1' paragraph>
         Your Sites
       </Typography>
       <Paper className={c.paper}>
-        {/*  */}
         {
           this.state.sites
             ? this.state.sites.map(site => {

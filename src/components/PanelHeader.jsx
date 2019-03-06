@@ -53,10 +53,10 @@ const styles = theme => ({
 });
 
 function Header(props) {
-  const { classes, title, tabs, bare } = props;
+  const { classes, title, tabs, bare, headerShadow } = props;
 
   return <PanelStateContext.Consumer>
-    {({ headerShadow, setDrawer }) => {
+    {({ setDrawerOpen }) => {
       return <div className={clsx(classes.root, headerShadow && classes.shadow)}>
         <AppBar color='primary' position='static' elevation={0}>
           <Toolbar>
@@ -66,7 +66,7 @@ function Header(props) {
                   <IconButton
                     color='inherit'
                     aria-label='Open drawer'
-                    onClick={() => setDrawer(true)}
+                    onClick={() => setDrawerOpen(true)}
                     className={classes.menuButton}
                   >
                     <MenuIcon />

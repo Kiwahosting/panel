@@ -9,38 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
-import SettingsIcon from '@material-ui/icons/Settings';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { logout } from 'api';
-import { navigate } from 'gatsby';
-
-const categories = [
-  {
-    id: 'Main',
-    children: [
-      { id: 'Home', icon: <HomeIcon />, destination: '/panel' },
-    ],
-  },
-  {
-    id: 'Site Stuff',
-    children: [
-      { id: 'Overview', icon: <SettingsIcon /> },
-      { id: 'Domains', icon: <SettingsIcon /> },
-      { id: 'Shit', icon: <SettingsIcon /> },
-    ],
-  },
-  {
-    id: 'Settings',
-    children: [
-      { id: 'Settings', icon: <SettingsIcon /> },
-      { id: 'Account', icon: <AccountCircleIcon /> },
-      { id: 'Log Out', icon: <AccountCircleIcon />, click: () => {
-        logout();
-        navigate('/auth#/panel');
-      } },
-    ],
-  },
-];
+import { SideBar } from 'navigation';
 
 const styles = theme => ({
   categoryHeader: {
@@ -108,7 +77,7 @@ function Navigator(props) {
             Project Overview
           </ListItemText>
         </ListItem>
-        {categories.map(({ id, children }) => (
+        {SideBar.map(({ id, children }) => (
           <React.Fragment key={id}>
             <ListItem className={classes.categoryHeader}>
               <ListItemText

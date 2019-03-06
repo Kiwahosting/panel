@@ -5,7 +5,7 @@ import { Router } from '@reach/router';
 import { isLoggedIn } from 'api';
 import withRoot from 'withRoot';
 
-import PanelMainPage from 'templates/PanelMainPage';
+import PanelMainPage from 'templates/PanelMainOverview';
 import Panel404 from 'templates/Panel404';
 import PanelLayout from 'layouts/PanelLayout';
 

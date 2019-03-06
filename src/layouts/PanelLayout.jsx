@@ -149,9 +149,8 @@ class Paperbase extends React.Component {
   state = {
     mobileOpen: false,
     context: {
-      headerShadow: false,
-      // eslint-disable-next-line
-      setHeaderShadow: (v) => this.setState({ context: { ...this.state.context, headerShadow: v } }),
+      drawerOpen: false,
+      setDrawerOpen: (v) => this.setState({ context: { ...this.state.context, drawerOpen: v } }),
     },
   };
 

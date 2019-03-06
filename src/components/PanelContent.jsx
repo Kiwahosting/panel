@@ -15,32 +15,30 @@ const styles = (theme) => createStyles({
 });
 
 class Panel404 extends Component {
+  state = { headerShadow: false }
   refScroll = (ref) => {
     if (ref) {
       ref.onscroll = () => {
-        this.setHeaderShadow(ref.scrollTop !== 0);
+        this.setState({ headerShadow: ref.scrollTop !== 0 });
       };
     }
   }
   render() {
-    const { classes: c, title, tabs, bare } = this.props;
+    const { classes: c, title, tabs, bare, activeTab } = this.props;
 
-    return <PanelStateContext.Consumer>
-      {({ setHeaderShadow }) => {
-        this.setHeaderShadow = setHeaderShadow;
-        return <>
-          <PanelHeader
-            title={title}
-            tabs={tabs}
-            bare={bare}
-            onDrawerToggle={this.handleDrawerToggle}
-          />
-        <main className={c.mainContent} ref={this.refScroll}>
-          {this.props.children}
-        </main>
-        </>;
-      }}
-    </PanelStateContext.Consumer>;
+    return <>
+      <PanelHeader
+        title={title}
+        activeTab={activeTab}
+        tabs={tabs}
+        bare={bare}
+        headerShadow={this.state.headerShadow}
+        onDrawerToggle={this.handleDrawerToggle}
+      />
+      <main className={c.mainContent} ref={this.refScroll}>
+        {this.props.children}
+      </main>
+    </>;
   }
 }
 
