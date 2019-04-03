@@ -27,5 +27,4 @@ function Home(props) {
   </MainLayout>;
 }
 
-import withRoot from 'withRoot';
-export default withRoot(withStyles(styles)(Home));
+export default withStyles(styles)(Home);

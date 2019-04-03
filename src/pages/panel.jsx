@@ -3,7 +3,6 @@ import { navigate } from 'gatsby';
 import { Router } from '@reach/router';
 
 import { isLoggedIn } from 'api';
-import withRoot from 'withRoot';
 
 import PanelMainPage from 'templates/PanelMainOverview';
 import Panel404 from 'templates/Panel404';
@@ -35,4 +34,4 @@ class Panel extends Component {
   }
 }
 
-export default withRoot(Panel);
+export default Panel;

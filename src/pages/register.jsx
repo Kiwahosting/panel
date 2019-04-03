@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import {
-  Avatar,
   Button,
   Typography,
   withStyles,
   createStyles,
   TextField,
 } from '@material-ui/core';
-import { red, amber, green } from '@material-ui/core/colors';
-
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
-import AuthLayout from 'layouts/AuthLayout';
+import { amber, green } from '@material-ui/core/colors';
+import { validateFullName, validateEmail } from 'utils/validate';
 import { Link } from 'components';
-
 import hsimp from 'how-secure-is-my-password/src/hsimp';
+import { setEmail, getEmail } from 'utils/global';
 
 hsimp.setNamedNumberDictionary({
   'hundred': 2,
@@ -55,9 +51,8 @@ hsimp.setNamedNumberDictionary({
 });
 
 const styles = theme => createStyles({
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
+  root: {
+    padding: theme.spacing.unit * 3,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -79,10 +74,10 @@ const styles = theme => createStyles({
     opacity: 0.7,
   },
   pass_bad: {
-    color: red[500],
+    color: amber[700],
   },
   pass_ok: {
-    color: amber[700],
+    color: green[500],
   },
   pass_good: {
     color: green[500],
@@ -96,7 +91,7 @@ class AuthPage extends Component {
   state = {
     isLoading: false,
     error: false,
-    loginState: 'initial', // initial, nomatch, taken, recapcha
+    errorString: null,
     name: '',
     mail: '',
     pswd: '',
@@ -107,9 +102,6 @@ class AuthPage extends Component {
 
   handleSubmit = (ev) => {
     this.setState({ isLoading: true });
-    setTimeout(() => {
-      this.setState({ isLoading: false });
-    }, 1000);
     ev.preventDefault();
   }
 
@@ -125,6 +117,7 @@ class AuthPage extends Component {
   }
   handleMailChange = (ev) => {
     this.setState({ mail: ev.target.value });
+    setEmail(ev.target.value);
     this.clearError();
   }
   handlePswdChange = (ev) => {
@@ -149,18 +142,33 @@ class AuthPage extends Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({ mail: getEmail() || '' });
+  }
+
   render() {
     const { classes: c } = this.props;
-    const { isLoading, error, passwordTime, passwordStrength } = this.state;
+    let { isLoading, error, errorString, passwordTime, passwordStrength, name, mail } = this.state;
 
-    return <AuthLayout loading={isLoading}>
-      <Avatar className={c.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component='h1' variant='h5'>
-        Create a Account
+    errorString = error || null;
+
+    let nameError = false;
+    if (name.trim() !== '' && !validateFullName(name)) {
+      nameError = true;
+      if(!errorString) errorString = 'invalid name';
+    }
+
+    let emailError = false;
+    if (mail.trim() !== '' && !validateEmail(mail)) {
+      emailError = true;
+      if(!errorString) errorString = 'invalid email';
+    }
+
+    return <div className={c.root}>
+      <Typography component='h1' variant='h5' align='center'>
+        Create an Account
       </Typography>
-      <Typography component='p' variant='body1'>
+      <Typography component='p' variant='body1' align='center'>
         for Kiwahosting Panel
       </Typography>
       <Typography component='p' variant='body1'>
@@ -173,7 +181,7 @@ class AuthPage extends Component {
           autoComplete='name'
           autoFocus
           label='Full Name'
-          error={error}
+          error={error || nameError}
           fullWidth
           value={this.state.name}
           onChange={this.handleNameChange}
@@ -183,7 +191,7 @@ class AuthPage extends Component {
           variant='outlined'
           autoComplete='email'
           label='Email Address'
-          error={error}
+          error={error || emailError}
           fullWidth
           value={this.state.mail}
           onChange={this.handleMailChange}
@@ -214,9 +222,13 @@ class AuthPage extends Component {
           onChange={this.handlePswdConfirmChange}
         />
         {
-          passwordTime && (
+          errorString && (
+            <Typography component='p' variant='body2' color='error' className={c.passwordStatus}>
+              { errorString }
+            </Typography>
+          ) || passwordTime && (
             passwordTime === 'Instantly'
-              ? <Typography component='p' variant='body2' color='error'>
+              ? <Typography component='p' variant='body2' color='error' className={c.passwordStatus}>
                 That password would be cracked instantly by a computer!
               </Typography>
               : (passwordTime === 'Forever' || passwordTime.length > 30
@@ -249,9 +261,8 @@ class AuthPage extends Component {
           <Link to='/auth'>Sign In</Link>
         </div>
       </form>
-    </AuthLayout>;
+    </div>;
   }
 }
 
-import withRoot from 'withRoot';
-export default withRoot(withStyles(styles)(AuthPage));
+export default withStyles(styles)(AuthPage);

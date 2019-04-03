@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 
 import DocsLayout from 'layouts/DocsLayout';
-import withRoot from 'withRoot';
 import Link from 'components/Link';
 
 // eslint-disable-next-line no-unused-vars
@@ -43,7 +42,7 @@ function Documentation(props) {
   </DocsLayout>;
 }
 
-export default withRoot(withStyles(styles)(Documentation));
+export default withStyles(styles)(Documentation);
 
 export const pageQuery = graphql`
   query PageByPath($path: String!) {

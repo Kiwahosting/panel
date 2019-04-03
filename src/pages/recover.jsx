@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import {
-  Avatar,
   Button,
   Typography,
   withStyles,
   createStyles,
   TextField,
 } from '@material-ui/core';
-
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
-import AuthLayout from 'layouts/AuthLayout';
+import { getEmail, setEmail } from 'utils/global';
 import { Link } from 'components';
 
 const styles = theme => createStyles({
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
+  root: {
+    padding: theme.spacing.unit * 3,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -69,6 +64,7 @@ class AuthPage extends Component {
 
   handleMailChange = (ev) => {
     this.setState({ mail: ev.target.value });
+    setEmail(ev.target.value);
     this.clearError();
   }
 
@@ -77,18 +73,19 @@ class AuthPage extends Component {
     this.clearError();
   }
 
+  componentDidMount() {
+    this.setState({ mail: getEmail() || '' });
+  }
+
   render() {
     const { classes: c } = this.props;
     const { isLoading, loginState, error } = this.state;
 
-    return <AuthLayout loading={isLoading}>
-      <Avatar className={c.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component='h1' variant='h5'>
+    return <div className={c.root}>
+      <Typography component='h1' variant='h5' align='center'>
         Recover your Password
       </Typography>
-      <Typography component='p' variant='body1'>
+      <Typography component='p' variant='body1' align='center'>
         for Kiwahosting Panel
       </Typography>
       {
@@ -131,9 +128,8 @@ class AuthPage extends Component {
             </div>
           </form>
       }
-    </AuthLayout>;
+    </div>;
   }
 }
 
-import withRoot from 'withRoot';
-export default withRoot(withStyles(styles)(AuthPage));
+export default withStyles(styles)(AuthPage);

@@ -2,23 +2,19 @@ import React, { Component } from 'react';
 import { login, isLoggedIn } from 'api';
 import { navigate } from 'gatsby';
 import {
-  Avatar,
   Button,
   Typography,
   withStyles,
   createStyles,
   TextField,
 } from '@material-ui/core';
-
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-
-import AuthLayout from 'layouts/AuthLayout';
+import { getEmail, setEmail, setLoading } from 'utils/global';
 import { Link } from 'components';
 
 const styles = theme => createStyles({
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
+  container: {
+    padding: theme.spacing.unit * 3,
+    width: '100%',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -39,10 +35,6 @@ const styles = theme => createStyles({
     marginTop: theme.spacing.unit * 2,
     opacity: 0.7,
   },
-  noscript: {
-    lineHeight: '280px', // this is calculated on marginTop and height of the `form` element
-    height: '280px',
-  },
 });
 
 class AuthPage extends Component {
@@ -55,16 +47,17 @@ class AuthPage extends Component {
   }
 
   handleSubmit = async(ev) => {
-    this.setState({ isLoading: true });
     ev.preventDefault();
+    setLoading(true);
 
     if(await login({ email: this.state.mail, password: this.state.pswd })) {
       navigate(
         (location.hash && location.hash.length > 0 && location.hash.replace(/^#/, '')) || '/panel'
       );
     } else {
-      this.setState({ loginState: 'denied', isLoading: false });
+      this.setState({ loginState: 'denied', error: true, isLoading: false });
     }
+    setLoading(false);
   }
 
   clearError() {
@@ -75,6 +68,7 @@ class AuthPage extends Component {
 
   handleMailChange = (ev) => {
     this.setState({ mail: ev.target.value });
+    setEmail(ev.target.value);
     this.clearError();
   }
 
@@ -83,9 +77,13 @@ class AuthPage extends Component {
     this.clearError();
   }
 
+  componentDidMount() {
+    this.setState({ mail: getEmail() || '' });
+  }
+
   render() {
     const { classes: c } = this.props;
-    const { isLoading, loginState, error } = this.state;
+    const { loginState, error, mail } = this.state;
 
     if (isLoggedIn()) {
       // If we’re logged in, redirect to the panel.
@@ -95,14 +93,11 @@ class AuthPage extends Component {
       return null;
     }
 
-    return <AuthLayout loading={isLoading}>
-      <Avatar className={c.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component='h1' variant='h5'>
+    return <div className={c.container}>
+      <Typography component='h1' variant='h5' align='center'>
         Sign in
       </Typography>
-      <Typography component='p' variant='body1'>
+      <Typography component='p' variant='body1' align='center'>
         to Kiwahosting Panel
       </Typography>
       {
@@ -125,21 +120,13 @@ class AuthPage extends Component {
               value={this.state.mail}
               onChange={this.handleMailChange}
             />
-            <TextField
-              className={c.input}
-              variant='outlined'
-              autoComplete='current-password'
-              label='Password'
-              type='password'
-              error={error}
-              fullWidth
-              value={this.state.pswd}
-              onChange={this.handlePswdChange}
-            />
             {
               loginState === 'denied'
                 && <Typography component='p' variant='body1' color='error'>
-                  Incorrect Username or Password
+              This account doesn't exist.
+                </Typography>
+                || <Typography component='p' variant='body1' color='error' aria-hidden='true'>
+                  &nbsp;
                 </Typography>
             }
             <Button
@@ -148,20 +135,20 @@ class AuthPage extends Component {
               variant='contained'
               color='primary'
               className={c.submit}
+              disabled={mail.trim() === '' || error || loginState === 'denied'}
             >
               Sign in
             </Button>
             <div className={c.create}>
-              <Link to='/register'>Don't Have an Account?</Link>
+              <Link to='/register'>Create Account</Link>
             </div>
             <div className={c.recover}>
               <Link to='/recover'>Reset Password</Link>
             </div>
           </form>
       }
-    </AuthLayout>;
+    </div>;
   }
 }
 
-import withRoot from 'withRoot';
-export default withRoot(withStyles(styles)(AuthPage));
+export default withStyles(styles)(AuthPage);

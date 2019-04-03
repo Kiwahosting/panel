@@ -8,6 +8,7 @@ exports.onCreateWebpackConfig = function ({ getConfig }) {
   config.resolve.alias['templates'] = path.join(__dirname, 'src/templates');
   config.resolve.alias['withRoot'] = path.join(__dirname, 'src/withRoot.jsx');
   config.resolve.alias['api'] = path.join(__dirname, 'src/api');
+  config.resolve.alias['utils'] = path.join(__dirname, 'src/utils');
   config.resolve.alias['navigation'] = path.join(__dirname, 'src/navigation');
 
 };
@@ -72,5 +73,15 @@ exports.onCreatePage = async ({ page, actions }) => {
     // Update the page.
     createPage(page);
   }
-}
-;
+  if (page.path.match(/^\/verify/)) {
+    page.matchPath = '/verify/*';
+    page.context.layout = 'auth';
+
+    // Update the page.
+    createPage(page);
+  }
+  else if (page.path.match(/auth|register|recover/)) {
+    page.context.layout = 'auth';
+    createPage(page);
+  }
+};

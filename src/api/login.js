@@ -6,19 +6,23 @@ export async function login({ email, password }) {
 
   await uselessDelay(700);
 
-  if(email !== 'dave') {
-    return false;
-  }
-  if(password !== 'demo') {
-    return false;
-  }
+  // if(email !== 'dave') {
+  //   return false;
+  // }
+  // if(password !== 'demo') {
+  //   return false;
+  // }
 
-  setCurrentUser({
-    email,
-    name: 'Dave',
-  });
+  // setCurrentUser({
+  //   email,
+  //   name: 'Dave',
+  // });
 
-  return true;
+  return false;
+}
+
+export async function signup({ email, password }) {
+  
 }
 
 export function logout() {

@@ -5,8 +5,11 @@ import {
   Typography,
   LinearProgress,
   Paper,
+  Avatar,
 } from '@material-ui/core';
 import classNames from 'classnames';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { onLoadingChange, offLoadingChange } from 'utils/global';
 
 const styles = theme => createStyles({
   main: {
@@ -30,7 +33,8 @@ const styles = theme => createStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+    padding: 0,
+    // padding: `0 ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
   },
   copyright: {
     marginTop: theme.spacing.unit * 2,
@@ -55,16 +59,36 @@ const styles = theme => createStyles({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    width: '100%',
   },
   contentLoading: {
     filter: 'brightness(0.90)',
   },
+  avatar: {
+    margin: theme.spacing.unit,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    backgroundColor: theme.palette.secondary.main,
+  },
 });
 
 class AuthLayout extends Component {
-  state = {}
+  state = { loading: false };
+  
+  componentDidMount() {
+    onLoadingChange(this.handleLoadingChange);
+  }
+  componentWillUnmount() {
+    offLoadingChange(this.handleLoadingChange);
+  }
+
+  handleLoadingChange = (state) => {
+    this.setState({ loading: state });
+  }
+  
   render() {
-    const { classes: c, children, loading } = this.props;
+    const { classes: c, children } = this.props;
+    const { loading } = this.state;
 
     return (
       <main className={c.main}>
@@ -77,6 +101,9 @@ class AuthLayout extends Component {
             [c.contentLoading]: loading,
             [c.content]: true,
           })}>
+            <Avatar className={c.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
             { children }
           </div>
         </Paper>

@@ -3,6 +3,12 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-hidenames',
     {
+      resolve: 'gatsby-plugin-layout',
+      options: {
+        component: require.resolve('./src/layouts/RootLayout.jsx'),
+      },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/docs`,
