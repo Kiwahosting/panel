@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { getEmail, setEmail } from 'utils/global';
 import { Link } from 'components';
+import { lang } from 'utils/language';
 
 const styles = theme => createStyles({
   root: {
@@ -39,9 +40,6 @@ const styles = theme => createStyles({
 
 class AuthPage extends Component {
   state = {
-    isLoading: false,
-    loginState: 'initial', // initial, denied
-    error: false,
     mail: '',
     pswd: '',
   }
@@ -79,19 +77,19 @@ class AuthPage extends Component {
 
   render() {
     const { classes: c } = this.props;
-    const { isLoading, loginState, error } = this.state;
+    const { error } = this.state;
 
     return <div className={c.root}>
       <Typography component='h1' variant='h5' align='center'>
-        Recover your Password
+        {lang('auth.recover.header')}
       </Typography>
       <Typography component='p' variant='body1' align='center'>
-        for Kiwahosting Panel
+        {lang('auth.recover.subheader')}
       </Typography>
       {
         typeof document === 'undefined'
         && <Typography variant='body1' className={c.noscript} color='error'>
-          <noscript>Please Enable JavaScript</noscript>
+          <noscript>{lang('noscript.recover')}</noscript>
         </Typography>
       }
       {
@@ -102,18 +100,12 @@ class AuthPage extends Component {
               variant='outlined'
               autoComplete='email'
               autoFocus
-              label='Email Address'
+              label={lang('auth.form.email')}
               error={error}
               fullWidth
               value={this.state.mail}
               onChange={this.handleMailChange}
             />
-            {
-              loginState === 'denied'
-                && <Typography component='p' variant='body1' color='error'>
-                  Incorrect Username or Password
-                </Typography>
-            }
             <Button
               type='submit'
               fullWidth
@@ -121,10 +113,10 @@ class AuthPage extends Component {
               color='primary'
               className={c.submit}
             >
-              Reset Password
+              {lang('auth.form.submit.recover')}
             </Button>
             <div className={c.create}>
-              <Link to='/auth'>Sign In</Link>
+              <Link to='/auth'>{lang('auth.link.signin')}</Link>
             </div>
           </form>
       }

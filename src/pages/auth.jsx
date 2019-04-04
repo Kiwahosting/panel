@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { getEmail, setEmail, setLoading } from 'utils/global';
 import { Link } from 'components';
+import { lang } from 'utils/language';
 
 const styles = theme => createStyles({
   container: {
@@ -95,15 +96,15 @@ class AuthPage extends Component {
 
     return <div className={c.container}>
       <Typography component='h1' variant='h5' align='center'>
-        Sign in
+        {lang('auth.signin.header')}
       </Typography>
       <Typography component='p' variant='body1' align='center'>
-        to Kiwahosting Panel
+        {lang('auth.signin.subheader')}
       </Typography>
       {
         typeof document === 'undefined'
         && <Typography variant='body1' className={c.noscript} color='error'>
-          <noscript>Please Enable JavaScript to Sign In</noscript>
+          <noscript>{lang('noscript.signin')}</noscript>
         </Typography>
       }
       {
@@ -114,7 +115,7 @@ class AuthPage extends Component {
               variant='outlined'
               autoComplete='email'
               autoFocus
-              label='Email Address'
+              label={lang('auth.form.email')}
               error={error}
               fullWidth
               value={this.state.mail}
@@ -123,7 +124,7 @@ class AuthPage extends Component {
             {
               loginState === 'denied'
                 && <Typography component='p' variant='body1' color='error'>
-              This account doesn't exist.
+                  {lang('auth.error.noexist')}
                 </Typography>
                 || <Typography component='p' variant='body1' color='error' aria-hidden='true'>
                   &nbsp;
@@ -137,13 +138,13 @@ class AuthPage extends Component {
               className={c.submit}
               disabled={mail.trim() === '' || error || loginState === 'denied'}
             >
-              Sign in
+              {lang('auth.form.submit.signin')}
             </Button>
             <div className={c.create}>
-              <Link to='/register'>Create Account</Link>
+              <Link to='/register'>{lang('auth.link.register')}</Link>
             </div>
             <div className={c.recover}>
-              <Link to='/recover'>Reset Password</Link>
+              <Link to='/recover'>{lang('auth.link.recover')}</Link>
             </div>
           </form>
       }

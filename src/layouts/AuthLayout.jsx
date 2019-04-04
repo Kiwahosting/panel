@@ -10,6 +10,7 @@ import {
 import classNames from 'classnames';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { onLoadingChange, offLoadingChange } from 'utils/global';
+import { lang } from 'utils/language';
 
 const styles = theme => createStyles({
   main: {
@@ -108,7 +109,7 @@ class AuthLayout extends Component {
           </div>
         </Paper>
         <Typography variant='caption' className={c.copyright}>
-          Copyright 2019 Kiwahosting
+          {lang('copyright')}
         </Typography>
       </main>
     );

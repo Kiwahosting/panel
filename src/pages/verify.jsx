@@ -22,7 +22,7 @@ const styles = theme => createStyles({
 
 class AuthPage extends Component {
   render() {
-    const { classes: c, location } = this.props;
+    const { classes: c } = this.props;
     
     return <div className={c.container}>
       <Typography component='h1' variant='h6' align='center'>

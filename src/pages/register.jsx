@@ -12,6 +12,7 @@ import { validateFullName, validateEmail } from 'utils/validate';
 import { Link } from 'components';
 import hsimp from 'how-secure-is-my-password/src/hsimp';
 import { setEmail, getEmail } from 'utils/global';
+import { lang } from 'utils/language';
 
 hsimp.setNamedNumberDictionary({
   'hundred': 2,
@@ -89,7 +90,6 @@ const styles = theme => createStyles({
 
 class AuthPage extends Component {
   state = {
-    isLoading: false,
     error: false,
     errorString: null,
     name: '',
@@ -148,31 +148,33 @@ class AuthPage extends Component {
 
   render() {
     const { classes: c } = this.props;
-    let { isLoading, error, errorString, passwordTime, passwordStrength, name, mail } = this.state;
+    let { error, errorString, passwordTime, passwordStrength, name, mail } = this.state;
 
     errorString = error || null;
 
     let nameError = false;
     if (name.trim() !== '' && !validateFullName(name)) {
       nameError = true;
-      if(!errorString) errorString = 'invalid name';
+      if (!errorString) errorString = lang('auth.error.fullname');
     }
 
     let emailError = false;
     if (mail.trim() !== '' && !validateEmail(mail)) {
       emailError = true;
-      if(!errorString) errorString = 'invalid email';
+      if (!errorString) errorString = lang('auth.error.email');
     }
 
     return <div className={c.root}>
       <Typography component='h1' variant='h5' align='center'>
-        Create an Account
+        {lang('auth.register.header')}        
       </Typography>
       <Typography component='p' variant='body1' align='center'>
-        for Kiwahosting Panel
+        {lang('auth.register.subheader')}        
       </Typography>
       <Typography component='p' variant='body1'>
-        <noscript>Please Enable JavaScript to Sign Up</noscript>
+        <noscript>
+          {lang('noscript.register')}
+        </noscript>
       </Typography>
       <form className={c.form} onSubmit={this.handleSubmit}>
         <TextField
@@ -180,7 +182,7 @@ class AuthPage extends Component {
           variant='outlined'
           autoComplete='name'
           autoFocus
-          label='Full Name'
+          label={lang('auth.form.name')}
           error={error || nameError}
           fullWidth
           value={this.state.name}
@@ -190,7 +192,7 @@ class AuthPage extends Component {
           className={c.input}
           variant='outlined'
           autoComplete='email'
-          label='Email Address'
+          label={lang('auth.form.email')}
           error={error || emailError}
           fullWidth
           value={this.state.mail}
@@ -200,7 +202,7 @@ class AuthPage extends Component {
           className={c.input}
           variant='outlined'
           autoComplete='new-password'
-          label='Password'
+          label={lang('auth.form.password')}
           type='password'
           error={error}
           fullWidth
@@ -214,7 +216,7 @@ class AuthPage extends Component {
           className={c.input}
           variant='outlined'
           autoComplete='new-password'
-          label='Confirm Password'
+          label={lang('auth.form.password.confirm')}
           type='password'
           error={error}
           fullWidth
@@ -229,7 +231,7 @@ class AuthPage extends Component {
           ) || passwordTime && (
             passwordTime === 'Instantly'
               ? <Typography component='p' variant='body2' color='error' className={c.passwordStatus}>
-                That password would be cracked instantly by a computer!
+                {lang('auth.error.password.instantly')}
               </Typography>
               : (passwordTime === 'Forever' || passwordTime.length > 30
                 ? <Typography component='p' variant='body2' className={classNames(
@@ -237,14 +239,14 @@ class AuthPage extends Component {
                   c.passwordStatus,
                 )}
                 >
-                  That password would take a very long time to crack.
+                  {lang('auth.error.password.forever')}
                 </Typography>
                 : <Typography component='p' variant='body2' className={classNames(
                   c['pass_' + passwordStrength],
                   c.passwordStatus,
                 )}
                 >
-                  That password would take about {passwordTime} to crack.
+                  {lang('auth.error.password.ok', passwordTime)}
                 </Typography>)
           ) || <div className={c.passwordStatus} />
         }
@@ -255,10 +257,12 @@ class AuthPage extends Component {
           color='primary'
           className={c.submit}
         >
-          Create Account
+          {lang('auth.form.submit.register')}
         </Button>
         <div className={c.create}>
-          <Link to='/auth'>Sign In</Link>
+          <Link to='/auth'>
+            {lang('auth.link.signin')}
+          </Link>
         </div>
       </form>
     </div>;
