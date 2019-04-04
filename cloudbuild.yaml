@@ -1,4 +1,6 @@
 steps:
+  - name: gcr.io/cloud-builders/git
+    args: ['clone', 'https://github.com/Kiwahosting/docs']
   - name: gcr.io/cloud-builders/npm
     args: ["install", "-D"]
   - name: gcr.io/cloud-builders/npm
