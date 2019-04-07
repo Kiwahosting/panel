@@ -1,3 +1,3 @@
 module.exports = {
-  apiBaseUrl: '127.0.0.1:8080',
+  apiBaseUrl: 'https://127.0.0.1:8080',
 };

@@ -1,28 +1,12 @@
 import { setCurrentUser, isLoggedIn } from './session';
 import { uselessDelay } from './useless';
 
-export async function login({ email, password }) {
-  if (isLoggedIn()) return;
+import { apiBaseUrl } from '../../config';
 
-  await uselessDelay(700);
-
-  // if(email !== 'dave') {
-  //   return false;
-  // }
-  // if(password !== 'demo') {
-  //   return false;
-  // }
-
-  // setCurrentUser({
-  //   email,
-  //   name: 'Dave',
-  // });
-
-  return false;
-}
-
-export async function signup({ email, password }) {
-  
+export async function emailExists({ email }) {
+  // TODO: Actually Work
+  await uselessDelay(400);
+  return true;
 }
 
 export function logout() {
