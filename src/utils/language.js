@@ -1,6 +1,6 @@
 const languages = {
   'en': require('../../lang/en.json'),
-  'en.redacted': require('../../lang/en.redacted.json'),
+  'en.redacted': Object.assign(require('../../lang/en.json'), require('../../lang/en.redacted.json')),
   'none': {},
 };
 

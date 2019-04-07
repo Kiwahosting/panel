@@ -4,6 +4,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getPageContext from './getPageContext';
 
+import './global.css'
+
 // A theme with custom primary and secondary color.
 export const theme = createMuiTheme({
   palette: {

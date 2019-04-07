@@ -1,30 +1,9 @@
 {
+  "$": "This file internally extends the en.json file",
+
   "title": "Crazy Future Project",
   "copyright": "Copyright 2019 The Thing We're Making",
-  "auth.signin.header": "Sign in",
   "auth.signin.subheader": "to the thing we're making",
-  "auth.recover.header": "Recover your Password",
   "auth.recover.subheader": "for the thing we're making",
-  "auth.register.header": "Create an Account",
-  "auth.register.subheader": "for the thing we're making",
-  "auth.form.name": "Full Name",
-  "auth.form.email": "Email Address",
-  "auth.form.password": "Password",
-  "auth.form.password.confirm": "Confirm Password",
-  "auth.form.submit.signin": "Sign in",
-  "auth.form.submit.register": "Create account",
-  "auth.form.submit.recover": "Reset Password",
-  "auth.link.register": "Create Account",
-  "auth.link.signin": "Sign In",
-  "auth.link.recover": "Recover Password",
-  "auth.error.noexist": "This account doesn't exist.",
-  "auth.error.emailtaken": "That email is taken.",
-  "auth.error.fullname": "Please enter a valid full name.",
-  "auth.error.email": "Please enter a valid email address.",
-  "auth.error.password.ok": "That password would take about ${0} to crack.",
-  "auth.error.password.instantly": "That password would be cracked instantly by a computer!",
-  "auth.error.password.forever": "That password would take a very long time to crack.",
-  "noscript.signin": "Enable JavaScript to Sign In",
-  "noscript.register": "Enable JavaScript to Create an Account",
-  "noscript.recover": "Enable JavaScript to Recover Account"
+  "auth.register.subheader": "for the thing we're making"
 }
