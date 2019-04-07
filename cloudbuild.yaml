@@ -9,3 +9,5 @@ steps:
     args: ["run", "build"]
   - name: gcr.io/cloud-builders/gsutil
     args: ["-m", "rsync", "-r", "-c", "-d", "./public", "gs://frontend.kiwahosting.com"]
+  - name: gcr.io/cloud-builders/curl
+    args: ["-d", "'{\"embeds\": [{\"title\": \"Deployed frontend\",\"description\": \"Deployed build $BUILD_ID\"}]}'", "-X", "POST", "'https://discordapp.com/api/webhooks/563186374136823840/agmBJxLaMLSMqHrDMOxXa522f6CMb_0Xme6smwJtnmlt78P4WJ3lyu3sGlCsKcj3BncN'"]
