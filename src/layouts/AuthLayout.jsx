@@ -15,6 +15,7 @@ import { lang } from 'utils/language';
 const styles = theme => createStyles({
   main: {
     position: 'relative',
+    // overflow: 'hidden',
     width: 'auto',
     display: 'flex', // Fix IE 11 issue.
     minHeight: '100vh',

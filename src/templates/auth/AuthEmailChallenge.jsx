@@ -49,7 +49,7 @@ class AuthPage extends Component {
     setLoading(true);
 
     if (await emailExists({ email: this.state.mail, password: this.state.pswd })) {
-      this.props.setChallenge('password');
+      this.props.setChallenge(AuthPasswordChallenge);
     } else {
       this.setState({ loginState: 'denied', error: true, isLoading: false });
     }
