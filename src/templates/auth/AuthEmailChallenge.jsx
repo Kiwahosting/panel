@@ -11,6 +11,7 @@ import { getEmail, setEmail, setLoading } from 'utils/global';
 import { Link } from 'components';
 import { lang } from 'utils/language';
 import { emailExists } from 'api';
+import AuthPasswordChallenge from './AuthPasswordChallenge';
 
 const styles = theme => createStyles({
   form: {
@@ -48,7 +49,7 @@ class AuthPage extends Component {
     setLoading(true);
 
     if (await emailExists({ email: this.state.mail, password: this.state.pswd })) {
-      // 
+      this.props.setChallenge('password');
     } else {
       this.setState({ loginState: 'denied', error: true, isLoading: false });
     }

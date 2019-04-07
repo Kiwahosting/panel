@@ -73,6 +73,12 @@ exports.onCreatePage = async ({ page, actions }) => {
     // Update the page.
     createPage(page);
   }
+  if (page.path.match(/^\/auth/)) {
+    page.matchPath = '/auth/*';
+
+    // Update the page.
+    createPage(page);
+  }
   if (page.path.match(/^\/verify/)) {
     page.matchPath = '/verify/*';
     page.context.layout = 'auth';
