@@ -1,10 +1,10 @@
 const languages = {
   'en': require('../../lang/en.json'),
-  'en.redacted': Object.assign(require('../../lang/en.json'), require('../../lang/en.redacted.json')),
+  'en.redacted': Object.assign({}, require('../../lang/en.json'), require('../../lang/en.redacted.json')),
   'none': {},
 };
 
-let language = 'en.redacted';
+let language = 'en';
 
 export function setLanguage(newLang) {
   language = newLang;

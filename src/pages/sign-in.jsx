@@ -12,6 +12,8 @@ const styles = theme => createStyles({
     width: '100%',
     position: 'relative',
     overflow: 'hidden',
+  },
+  outer2: {
     transition: 'height 300ms cubic-bezier(0.4,0,0.2,1)',
   },
   challenge: {
@@ -44,14 +46,18 @@ function SignIn({ classes: c }) {
   const [challenge, setChallenge] = useState({ Comp: AuthEmailChallenge });
   const [outerRef, setOuterRef] = useState(null);
   const [contentHeight, setContentHeight] = useState(0);
+  const [animate, setAnimate] = useState(false);
   
   return <AuthLayout>
-    <div className={c.outer} style={{ height: contentHeight + 'px' }} ref={(elem) => {
-      setOuterRef(elem);
-      if (outerRef) {
-        outerRef.scrollLeft = 0;
-      }
-    }}>
+    <div className={clsx(c.outer, animate && c.outer2)}
+      style={{ height: contentHeight + 'px' }}
+      ref={(elem) => {
+        setOuterRef(elem);
+        if (outerRef) {
+          outerRef.scrollLeft = 0;
+          setAnimate(true);
+        }
+      }}>
       <TransitionGroup>
         <Transition key={key} timeout={{
           enter: 0,

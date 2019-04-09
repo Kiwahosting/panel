@@ -21,7 +21,7 @@ function Home(props) {
       Coming Soon!
     </Typography>
     <Typography component='p' variant='body1'>
-      <Link to='/auth'>Log In</Link>
+      <Link to='/sign-in'>Log In</Link>
     </Typography>
 
   </MainLayout>;

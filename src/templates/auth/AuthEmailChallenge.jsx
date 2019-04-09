@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { navigate } from 'gatsby';
 import {
   Button,
   Typography,
@@ -48,7 +47,7 @@ class AuthPage extends Component {
     ev.preventDefault();
     setLoading(true);
 
-    if (await emailExists({ email: this.state.mail, password: this.state.pswd })) {
+    if (await emailExists(this.state.mail)) {
       this.props.setChallenge(AuthPasswordChallenge);
     } else {
       this.setState({ loginState: 'denied', error: true, isLoading: false });
